@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <ctime>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -19,8 +22,29 @@ private:
 	sf::Event ev;
 
 
-	//Game objects
+	// Mouse position
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePosView;
 
+	// Resources
+	sf::Font font;
+
+	//Text
+
+	sf::Text uiText;
+
+
+	// Game logic
+	bool endGame;
+	unsigned points;
+	int health;
+	float enemySpawnTimer;
+	float enemySpawnTimerMax;
+	int maxEnemies;
+	bool mouseHeld;
+
+	//Game objects
+	std::vector<sf::RectangleShape> enemies;
 	sf::RectangleShape enemy;
 	
 
@@ -28,6 +52,8 @@ private:
 	// Private Functons
 	void initVariables();
 	void initWindow();
+	void initFonts();
+	void initText();
 	void initEnemies();
 
 public:
@@ -39,13 +65,24 @@ public:
 	//Accessors
 
 	const bool running() const;
-
+	const bool getEndGame() const;
 
 
 
 	//Functions
+
+
+	void spawnEnemy();
+
 	void pollEvents();
+	void UpdateMousePosition();
+	void UpdateText();
+	void UpdateEnemies();
 	void Update();
+
+	void RenderText(sf::RenderTarget& target);
+	void RenderEnemies(sf::RenderTarget& target);
 	void Render();
+
 
 };
